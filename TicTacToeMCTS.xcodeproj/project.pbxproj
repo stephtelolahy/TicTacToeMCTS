@@ -17,6 +17,11 @@
 		33AEBF842663C3D300C86532 /* BoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF832663C3D300C86532 /* BoardTests.swift */; };
 		33AEBF852663C3FB00C86532 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF732663582700C86532 /* Board.swift */; };
 		33AEBF862663C3FD00C86532 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF712663570B00C86532 /* State.swift */; };
+		33AEBF8A2663D02500C86532 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF892663D02500C86532 /* Node.swift */; };
+		33AEBF8C2663D44B00C86532 /* MonteCarloTreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MonteCarloTreeSearch.swift */; };
+		33AEBF8E2663DF6000C86532 /* MonteCarloTreeSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */; };
+		33AEBF8F2663DFC300C86532 /* MonteCarloTreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MonteCarloTreeSearch.swift */; };
+		33AEBF902663DFC500C86532 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF892663D02500C86532 /* Node.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +47,9 @@
 		33AEBF792663C3B300C86532 /* TicTacToeMCTSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeMCTSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AEBF7D2663C3B300C86532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33AEBF832663C3D300C86532 /* BoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTests.swift; sourceTree = "<group>"; };
+		33AEBF892663D02500C86532 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		33AEBF8B2663D44B00C86532 /* MonteCarloTreeSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonteCarloTreeSearch.swift; sourceTree = "<group>"; };
+		33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonteCarloTreeSearchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,8 @@
 			children = (
 				33AEBF732663582700C86532 /* Board.swift */,
 				33AEBF712663570B00C86532 /* State.swift */,
+				33AEBF892663D02500C86532 /* Node.swift */,
+				33AEBF8B2663D44B00C86532 /* MonteCarloTreeSearch.swift */,
 			);
 			path = MCTS;
 			sourceTree = "<group>";
@@ -108,6 +118,7 @@
 			children = (
 				33AEBF7D2663C3B300C86532 /* Info.plist */,
 				33AEBF832663C3D300C86532 /* BoardTests.swift */,
+				33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */,
 			);
 			path = TicTacToeMCTSTests;
 			sourceTree = "<group>";
@@ -212,8 +223,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33AEBF8C2663D44B00C86532 /* MonteCarloTreeSearch.swift in Sources */,
 				33AEBF612663557000C86532 /* ViewController.swift in Sources */,
 				33AEBF5D2663557000C86532 /* AppDelegate.swift in Sources */,
+				33AEBF8A2663D02500C86532 /* Node.swift in Sources */,
 				33AEBF742663582700C86532 /* Board.swift in Sources */,
 				33AEBF722663570B00C86532 /* State.swift in Sources */,
 			);
@@ -224,8 +237,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				33AEBF852663C3FB00C86532 /* Board.swift in Sources */,
+				33AEBF8F2663DFC300C86532 /* MonteCarloTreeSearch.swift in Sources */,
 				33AEBF842663C3D300C86532 /* BoardTests.swift in Sources */,
+				33AEBF902663DFC500C86532 /* Node.swift in Sources */,
 				33AEBF862663C3FD00C86532 /* State.swift in Sources */,
+				33AEBF8E2663DF6000C86532 /* MonteCarloTreeSearchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

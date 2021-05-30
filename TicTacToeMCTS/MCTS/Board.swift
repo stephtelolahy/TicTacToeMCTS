@@ -61,49 +61,6 @@ class Board {
         } else {
             return Board.IN_PROGRESS
         }
-        
-        
-        
-        
-        /*
-         let boardSize = boardValues.count
-         let maxIndex = boardSize - 1
-         var diag1: [Int] = []
-         var diag2: [Int] = []
-         
-         for i in 0...maxIndex {
-         let row = boardValues[i]
-         var col: [Int] = []
-         for j in 0...maxIndex {
-         col[j] = boardValues[j][i];
-         }
-         
-         let checkRowForWin = checkForWin(row)
-         if checkRowForWin != 0 {
-         return checkRowForWin
-         }
-         
-         int checkColForWin = checkForWin(col);
-         if(checkColForWin!=0)
-         return checkColForWin;
-         
-         diag1[i] = boardValues[i][i];
-         diag2[i] = boardValues[maxIndex - i][i];
-         }
-         
-         int checkDia1gForWin = checkForWin(diag1);
-         if(checkDia1gForWin!=0)
-         return checkDia1gForWin;
-         
-         int checkDiag2ForWin = checkForWin(diag2);
-         if(checkDiag2ForWin!=0)
-         return checkDiag2ForWin;
-         
-         if (getEmptyPositions().size() > 0)
-         return IN_PROGRESS;
-         else
-         return DRAW;
-         */
     }
     
     var emptyPositions: [Position] {
@@ -116,7 +73,6 @@ class Board {
                 }
             }
         }
-        
         return result
     }
     
@@ -128,26 +84,26 @@ class Board {
 
 extension Board {
     
-    func printBoard() {
-        let size = values.count
-        for i in 0..<size {
-            print(values[i].map { "\($0)\t" })
+    func toString() -> String {
+        values.map { row in
+            row.map { "\($0)\t" }.joined()
         }
+        .joined(separator: "\n")
     }
     
-    func printStatus() {
+    func statusString() -> String {
         switch status {
         case Self.P1:
-            print("Player 1 wins")
+            return "Player 1 wins"
             
         case Self.P2:
-            print("Player 2 wins")
+            return "Player 2 wins"
             
         case Self.DRAW:
-            print("Game Draw")
+            return "Game Draw"
             
         case Self.IN_PROGRESS:
-            print("Game In Progress")
+            return "Game In Progress"
             
         default:
             fatalError("Illegal status")
@@ -159,7 +115,8 @@ extension Array where Element == Int {
     
     func commonValue() -> Element? {
         let firstValue = self[0]
-        if self.allSatisfy({ $0 == firstValue }) {
+        if firstValue != 0,
+           self.allSatisfy({ $0 == firstValue }) {
             return firstValue
         } else {
             return nil

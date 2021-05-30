@@ -21,6 +21,19 @@ class BoardTests: XCTestCase {
                                     [0, 0, 0]])
     }
     
+    func test_InitialBoardIsInProgress() {
+        // Given
+        // When
+        let sut = Board()
+        
+        // Assert
+        XCTAssertEqual(sut.totalMoves, 0)
+        XCTAssertEqual(sut.values, [[0, 0, 0],
+                                    [0, 0, 0],
+                                    [0, 0, 0]])
+        XCTAssertEqual(sut.status, Board.IN_PROGRESS)
+    }
+    
     func test_InitializeBoardWithValues() {
         // Given
         let values = [[0, 1, 1],
