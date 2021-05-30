@@ -11,30 +11,25 @@ import Foundation
 enum MonteCarloTreeSearch {
     
     static let WIN_SCORE = 10
-    static let DEFAULT_LEVEL = 3
+    static let DEFAULT_ITERATIONS = 1000
     
-    static func findNextMove(board: Board, playerNo: Int, level: Int = DEFAULT_LEVEL) -> Board {
-        
-        let start = Date.timeIntervalSinceReferenceDate
-        let millisForCurrentLevel = 2 * (level - 1) + 1;
-        let end = start + 60.0 * Double(millisForCurrentLevel)
-        
+    static func findNextMove(board: Board, playerNo: Int, iterations: Int = DEFAULT_ITERATIONS) -> Board {
+        let rootNode = Node(state: State(board: board, playerNo: playerNo))
         let opponent = 3 - playerNo
-        let rootNode = Node(state: State(board: board, playerNo: opponent))
         
-        while Date.timeIntervalSinceReferenceDate < end {
+        for _ in 0..<iterations {
             // Phase 1 - Selection
             let promisingNode = selectPromisingNode(rootNode)
             
             // Phase 2 - Expansion
-            if (promisingNode.state.board.status == Board.IN_PROGRESS) {
+            if promisingNode.state.board.status == Board.IN_PROGRESS {
                 expandNode(promisingNode)
             }
             
             // Phase 3 - Simulation
             var nodeToExplore = promisingNode
             if !promisingNode.children.isEmpty {
-                nodeToExplore = promisingNode.getRandomChildNode();
+                nodeToExplore = promisingNode.getRandomChildNode()
             }
             let playoutResult = simulateRandomPlayout(nodeToExplore, opponent: opponent)
             
@@ -49,7 +44,7 @@ enum MonteCarloTreeSearch {
 
 private extension MonteCarloTreeSearch {
     
-    static func selectPromisingNode(_ rootNode: Node) -> Node{
+    static func selectPromisingNode(_ rootNode: Node) -> Node {
         var node = rootNode
         while (!node.children.isEmpty) {
             node = UCT.findBestNodeWithUCT(node)
@@ -65,21 +60,20 @@ private extension MonteCarloTreeSearch {
     
     static func simulateRandomPlayout(_ node: Node, opponent: Int) -> Int {
         let tempNode = Node(node: node)
-        let tempState = tempNode.state
+        var tempState = tempNode.state
         var boardStatus = tempState.board.status
         
-        if (boardStatus == opponent) {
+        if boardStatus == opponent {
             tempNode.parent?.state.winScore = Double(Int.min)
             return boardStatus
         }
         
-        while (boardStatus == Board.IN_PROGRESS) {
-            tempState.togglePlayer()
-            tempState.randomPlay()
+        while boardStatus == Board.IN_PROGRESS {
+            tempState = tempState.allPossibleStates().randomElement()!
             boardStatus = tempState.board.status
         }
         
-        return boardStatus;
+        return boardStatus
     }
     
     static func backPropogation(_ nodeToExplore: Node, playerNo: Int) {
@@ -94,7 +88,7 @@ private extension MonteCarloTreeSearch {
     }
 }
 
-enum UCT {
+private enum UCT {
     
     static func findBestNodeWithUCT(_ node: Node) -> Node {
         let parentVisit = node.state.visitCount
@@ -105,7 +99,7 @@ enum UCT {
         }!
     }
     
-    private static func uctValue(totalVisit: Int, nodeWinScore: Double, nodeVisit: Int) -> Double {
+    static func uctValue(totalVisit: Int, nodeWinScore: Double, nodeVisit: Int) -> Double {
         if (nodeVisit == 0) {
             return Double(Int.max)
         }

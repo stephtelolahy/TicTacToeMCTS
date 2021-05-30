@@ -175,7 +175,6 @@
 					};
 					33AEBF782663C3B300C86532 = {
 						CreatedOnToolsVersion = 12.5;
-						TestTargetID = 33AEBF582663557000C86532;
 					};
 				};
 			};
@@ -432,7 +431,6 @@
 		33AEBF812663C3B300C86532 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TicTacToeMCTSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -444,14 +442,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacToeMCTS.app/TicTacToeMCTS";
 			};
 			name = Debug;
 		};
 		33AEBF822663C3B300C86532 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TicTacToeMCTSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -463,7 +459,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacToeMCTS.app/TicTacToeMCTS";
 			};
 			name = Release;
 		};

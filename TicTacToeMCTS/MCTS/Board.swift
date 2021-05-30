@@ -12,26 +12,23 @@ struct Position {
     let y: Int
 }
 
-class Board {
+struct Board {
     
     static let IN_PROGRESS = -1
     static let DRAW = 0
     static let P1 = 1
     static let P2 = 2
     
-    var values: [[Int]]
-    var totalMoves: Int
+    let values: [[Int]]
     
     init() {
         values = [[0, 0, 0],
                   [0, 0, 0],
                   [0, 0, 0]]
-        totalMoves = 0
     }
     
     init(values: [[Int]]) {
         self.values = values
-        totalMoves = 0
     }
     
     var status: Int {
@@ -51,7 +48,7 @@ class Board {
         rows.append([values[0][2], values[1][1], values[2][0]])
         
         for row in rows {
-            if let win = row.commonValue() {
+            if let win = row.winValue() {
                 return win
             }
         }
@@ -76,44 +73,16 @@ class Board {
         return result
     }
     
-    func performMove(player: Int, p: Position) {
+    func performMove(player: Int, p: Position) -> Board {
+        var values = values
         values[p.x][p.y] = player
-        totalMoves += 1
-    }
-}
-
-extension Board {
-    
-    func toString() -> String {
-        values.map { row in
-            row.map { "\($0)\t" }.joined()
-        }
-        .joined(separator: "\n")
-    }
-    
-    func statusString() -> String {
-        switch status {
-        case Self.P1:
-            return "Player 1 wins"
-            
-        case Self.P2:
-            return "Player 2 wins"
-            
-        case Self.DRAW:
-            return "Game Draw"
-            
-        case Self.IN_PROGRESS:
-            return "Game In Progress"
-            
-        default:
-            fatalError("Illegal status")
-        }
+        return Board(values: values)
     }
 }
 
 extension Array where Element == Int {
     
-    func commonValue() -> Element? {
+    func winValue() -> Element? {
         let firstValue = self[0]
         if firstValue != 0,
            self.allSatisfy({ $0 == firstValue }) {

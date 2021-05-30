@@ -15,7 +15,6 @@ class BoardTests: XCTestCase {
         let sut = Board()
         
         // Assert
-        XCTAssertEqual(sut.totalMoves, 0)
         XCTAssertEqual(sut.values, [[0, 0, 0],
                                     [0, 0, 0],
                                     [0, 0, 0]])
@@ -27,7 +26,6 @@ class BoardTests: XCTestCase {
         let sut = Board()
         
         // Assert
-        XCTAssertEqual(sut.totalMoves, 0)
         XCTAssertEqual(sut.values, [[0, 0, 0],
                                     [0, 0, 0],
                                     [0, 0, 0]])
@@ -44,7 +42,6 @@ class BoardTests: XCTestCase {
         let sut = Board(values: values)
         
         // Assert
-        XCTAssertEqual(sut.totalMoves, 0)
         XCTAssertEqual(sut.values, values)
     }
     
@@ -56,13 +53,12 @@ class BoardTests: XCTestCase {
         let sut = Board(values: values)
         
         // When
-        sut.performMove(player: 1, p: Position(x: 0, y: 0))
+        let output = sut.performMove(player: 1, p: Position(x: 0, y: 0))
         
         // Assert
-        XCTAssertEqual(sut.values, [[1, 1, 1],
-                                    [0, 0, 1],
-                                    [2, 2, 1]])
-        XCTAssertEqual(sut.totalMoves, 1)
+        XCTAssertEqual(output.values, [[1, 1, 1],
+                                       [0, 0, 1],
+                                       [2, 2, 1]])
     }
     
     func test_InProgress_IfSomePositionsEmpty() {

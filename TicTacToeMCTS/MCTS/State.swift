@@ -7,10 +7,9 @@
 
 class State {
     let board: Board
-    var playerNo: Int
+    let playerNo: Int
     var visitCount: Int
     var winScore: Double
-    
     
     init(board: Board, playerNo: Int) {
         self.board = board
@@ -19,16 +18,10 @@ class State {
         self.winScore = 0
     }
     
-    var opponent: Int {
-        3 - playerNo
-    }
-    
     func allPossibleStates() -> [State] {
-        board.emptyPositions.map { position in
-            let newPlayer = opponent
-            let newBoard = Board(values: board.values)
-            newBoard.performMove(player: newPlayer, p: position)
-            return State(board: newBoard, playerNo: newPlayer)
+        board.emptyPositions.map {
+            State(board: board.performMove(player: playerNo, p: $0),
+                  playerNo: 3 - playerNo)
         }
     }
     
@@ -37,17 +30,10 @@ class State {
     }
     
     func addScore(score: Double) {
-        if winScore != Double(Int.min) {
-            winScore += score;
+        guard winScore != Double(Int.min) else {
+            return
         }
-    }
-    
-    func randomPlay() {
-        board.performMove(player: playerNo, p: board.emptyPositions.randomElement()!)
-    }
-    
-    func togglePlayer() {
-        playerNo = opponent
+        
+        winScore += score
     }
 }
-
