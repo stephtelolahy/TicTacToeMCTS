@@ -9,13 +9,13 @@ class State {
     let board: Board
     let playerNo: Int
     var visitCount: Int
-    var winScore: Double
+    var totalScore: Int
     
     init(board: Board, playerNo: Int) {
         self.board = board
         self.playerNo = playerNo
         self.visitCount = 0
-        self.winScore = 0
+        self.totalScore = 0
     }
     
     func allPossibleStates() -> [State] {
@@ -23,17 +23,5 @@ class State {
             State(board: board.performMove(player: playerNo, p: $0),
                   playerNo: 3 - playerNo)
         }
-    }
-    
-    func incrementVisit() {
-        visitCount += 1
-    }
-    
-    func addScore(score: Double) {
-        guard winScore != Double(Int.min) else {
-            return
-        }
-        
-        winScore += score
     }
 }

@@ -10,8 +10,10 @@ import Foundation
 
 enum MonteCarloTreeSearch {
     
-    static let WIN_SCORE = 10
-    static let DEFAULT_ITERATIONS = 1000
+    static let DEFAULT_ITERATIONS = 100
+    static let WIN_SCORE = 20
+    static let DRAW_SCORE = 10
+    static let LOOSE_SCORE = 0
     
     static func findNextMove(board: Board, playerNo: Int, iterations: Int = DEFAULT_ITERATIONS) -> Board {
         let rootNode = Node(state: State(board: board, playerNo: playerNo))
@@ -28,16 +30,16 @@ enum MonteCarloTreeSearch {
             
             // Phase 3 - Simulation
             var nodeToExplore = promisingNode
-            if !promisingNode.children.isEmpty {
-                nodeToExplore = promisingNode.getRandomChildNode()
+            if promisingNode.children.count > 0 {
+                nodeToExplore = promisingNode.children.randomElement()!
             }
-            let playoutResult = simulateRandomPlayout(nodeToExplore, opponent: opponent)
+            let playoutResult = simulateRandomPlayout(nodeToExplore, playerNo: playerNo, opponent: opponent)
             
             // Phase 4 - Update
-            backPropogation(nodeToExplore, playerNo: playoutResult);
+            backPropogation(nodeToExplore, result: playoutResult);
         }
         
-        let winnerNode = rootNode.getChildWithMaxScore()
+        let winnerNode = findBestNodeWithScore(rootNode)
         return winnerNode.state.board
     }
 }
@@ -46,8 +48,8 @@ private extension MonteCarloTreeSearch {
     
     static func selectPromisingNode(_ rootNode: Node) -> Node {
         var node = rootNode
-        while (!node.children.isEmpty) {
-            node = UCT.findBestNodeWithUCT(node)
+        while node.children.count > 0 {
+            node = findBestNodeWithUCT(node)
         }
         return node
     }
@@ -58,57 +60,57 @@ private extension MonteCarloTreeSearch {
         }
     }
     
-    static func simulateRandomPlayout(_ node: Node, opponent: Int) -> Int {
-        let tempNode = Node(node: node)
-        var tempState = tempNode.state
+    static func simulateRandomPlayout(_ node: Node, playerNo: Int, opponent: Int) -> Int {
+        var tempState = node.state
         var boardStatus = tempState.board.status
         
-        if boardStatus == opponent {
-            tempNode.parent?.state.winScore = Double(Int.min)
-            return boardStatus
-        }
-        
+        // While not in terminal state
         while boardStatus == Board.IN_PROGRESS {
             tempState = tempState.allPossibleStates().randomElement()!
             boardStatus = tempState.board.status
         }
         
-        return boardStatus
+        if boardStatus == playerNo {
+            return WIN_SCORE
+        } else if boardStatus == opponent {
+            return LOOSE_SCORE
+        } else if boardStatus == Board.DRAW {
+            return DRAW_SCORE
+        } else {
+            fatalError("Illegal state")
+        }
     }
     
-    static func backPropogation(_ nodeToExplore: Node, playerNo: Int) {
+    static func backPropogation(_ nodeToExplore: Node, result: Int) {
         var tempNode: Node? = nodeToExplore
         while tempNode != nil {
-            tempNode?.state.incrementVisit()
-            if tempNode?.state.playerNo == playerNo {
-                tempNode?.state.addScore(score: Double(Self.WIN_SCORE))
-            }
+            tempNode?.state.visitCount += 1
+            tempNode?.state.totalScore += result
             tempNode = tempNode?.parent
         }
     }
-}
-
-private enum UCT {
     
     static func findBestNodeWithUCT(_ node: Node) -> Node {
-        let parentVisit = node.state.visitCount
-        return node.children.max { n1, n2 in
-            let score1 = UCT.uctValue(totalVisit: parentVisit, nodeWinScore: n1.state.winScore, nodeVisit: n1.state.visitCount)
-            let score2 = UCT.uctValue(totalVisit: parentVisit, nodeWinScore: n2.state.winScore, nodeVisit: n2.state.visitCount)
-            return score1 < score2
-        }!
+        node.children.max { uctValue($0) < uctValue($1) }!
     }
     
-    static func uctValue(totalVisit: Int, nodeWinScore: Double, nodeVisit: Int) -> Double {
-        if (nodeVisit == 0) {
+    static func uctValue(_ node: Node) -> Double {
+        let totalVisit = node.parent!.state.visitCount
+        let totalScore = node.state.totalScore
+        let visitCount = node.state.visitCount
+        
+        if visitCount == 0 {
             return Double(Int.max)
         }
         
-        let fNodeVisit = Double(nodeVisit)
-        let fTotalVisit = Double(totalVisit)
-        let result = nodeWinScore / fNodeVisit + 1.41 *  (log2(fTotalVisit) / fNodeVisit).squareRoot()
-        
-        return result
+        return Double(totalScore) / Double(visitCount) + 1.41 *  (log2(Double(totalVisit)) / Double(visitCount)).squareRoot()
+    }
+    
+    static func findBestNodeWithScore(_ node: Node) -> Node {
+        node.children.max { averageValue($0) < averageValue($1) }!
+    }
+    
+    static func averageValue(_ node: Node) -> Double {
+        Double(node.state.totalScore) / Double(node.state.visitCount)
     }
 }
-

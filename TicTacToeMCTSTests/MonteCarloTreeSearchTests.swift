@@ -16,9 +16,9 @@ class MonteCarloTreeSearchTests: XCTestCase {
         while board.status == Board.IN_PROGRESS {
             board = MonteCarloTreeSearch.findNextMove(board: board, playerNo: player)
             player = 3 - player
+            
+            print(board.toString())
         }
-        
-        print(board.toString())
         
         XCTAssertEqual(board.status, Board.DRAW)
     }

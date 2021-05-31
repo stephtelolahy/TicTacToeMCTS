@@ -21,13 +21,4 @@ class Node {
         self.children = []
         self.parent = parent
     }
-    
-    func getRandomChildNode() -> Node {
-        children.randomElement()!
-    }
-    
-    func getChildWithMaxScore() -> Node {
-        children.max { $0.state.visitCount < $1.state.visitCount }!
-    }
-    
 }
