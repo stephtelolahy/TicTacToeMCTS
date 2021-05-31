@@ -8,17 +8,25 @@
 import XCTest
 
 class MonteCarloTreeSearchTests: XCTestCase {
+    
+    private var sut: MonteCarloTreeSearch!
+    
+    override func setUp() {
+        sut = MonteCarloTreeSearch()
+    }
 
     func test_GivenEmptyBoard_whenSimulateInterAIPlay_thenGameDraw() {
         var board = Board()
         var player = Board.P1
         
         while board.status == Board.IN_PROGRESS {
-            board = MonteCarloTreeSearch.findNextMove(board: board, playerNo: player)
+            board = sut.findNextMove(board: board, player: player)
             player = 3 - player
             
-            print(board.toString())
+            print(board.toString() + "\n")
         }
+        
+        print(board.toString() + "\n")
         
         XCTAssertEqual(board.status, Board.DRAW)
     }
@@ -28,8 +36,10 @@ class MonteCarloTreeSearchTests: XCTestCase {
 private extension Board {
     
     func toString() -> String {
-        values.map { row in
-            row.map { "\($0)\t" }.joined()
+        let displayText: [String] = [".", "0", "X"]
+        
+        return values.map { row in
+            row.map { "\(displayText[$0])\t" }.joined()
         }
         .joined(separator: "\n")
     }
