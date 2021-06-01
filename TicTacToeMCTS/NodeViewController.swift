@@ -8,14 +8,14 @@
 import UIKit
 
 class NodeViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
-    var node: Node!
+    var node: Node<Board>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = node.player == Board.P1 ? "O" : "X"
+        title = "Turn: \((node.state.turn == Board.P1 ? "O" : "X"))"
     }
 }
 
@@ -49,15 +49,15 @@ extension NodeViewController: UITableViewDelegate {
 
 
 class NodeCell: UITableViewCell {
- 
+    
     @IBOutlet weak var boardLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     
-    func update(_ node: Node, isBest: Bool) {
-        boardLabel.text = node.board.toString()
+    func update(_ node: Node<Board>, isBest: Bool) {
+        boardLabel.text = node.state.toString()
         infoLabel.text = "\(node.winCount)/\(node.visitCount)"
         
-        if node.board.status == Board.IN_PROGRESS {
+        if node.state.status == Status.IN_PROGRESS {
             backgroundColor = isBest ? .yellow : .white
         } else {
             backgroundColor = .green

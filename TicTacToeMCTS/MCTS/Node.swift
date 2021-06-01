@@ -5,27 +5,15 @@
 //  Created by Hugues Stéphano TELOLAHY on 30/05/2021.
 //
 
-class Node {
-    let board: Board
-    let player: Int
+class Node<T: State> {
+    let state: T
     let parent: Node?
-    
+    var children: [Node] = []
     var visitCount: Int = 0
     var winCount: Int = 0
-    var children: [Node] = []
     
-    
-    init(board: Board, player: Int, parent: Node? = nil) {
-        self.board = board
-        self.player = player
+    init(state: T, parent: Node? = nil) {
+        self.state = state
         self.parent = parent
-    }
-    
-    func allPossibleStates() -> [Node] {
-        board.emptyPositions.map {
-            Node(board: board.performMove(player: player, p: $0),
-                 player: 3 - player,
-                 parent: self)
-        }
     }
 }

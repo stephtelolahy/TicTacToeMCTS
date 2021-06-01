@@ -7,28 +7,29 @@
 
 import Foundation
 
-struct Position {
-    let x: Int
-    let y: Int
-}
-
-struct Board: Equatable {
+struct Board: State, Equatable {
     
-    static let IN_PROGRESS = -1
-    static let DRAW = 0
     static let P1 = 1
     static let P2 = 2
     
-    let values: [[Int]]
-    
-    init() {
-        values = [[0, 0, 0],
-                  [0, 0, 0],
-                  [0, 0, 0]]
+    struct Position {
+        let x: Int
+        let y: Int
     }
     
-    init(values: [[Int]]) {
+    let values: [[Int]]
+    let turn: Int
+    
+    init(values: [[Int]] =  [[0, 0, 0],
+                             [0, 0, 0],
+                             [0, 0, 0]],
+         turn: Int = Board.P1) {
         self.values = values
+        self.turn = turn
+    }
+    
+    var opponent: Int {
+        3 - turn
     }
     
     var status: Int {
@@ -54,9 +55,15 @@ struct Board: Equatable {
         }
         
         if emptyPositions.isEmpty {
-            return Board.DRAW
+            return Status.DRAW
         } else {
-            return Board.IN_PROGRESS
+            return Status.IN_PROGRESS
+        }
+    }
+    
+    var allPossibleMoves: [Board] {
+        emptyPositions.map {
+            performMove($0)
         }
     }
     
@@ -73,10 +80,10 @@ struct Board: Equatable {
         return result
     }
     
-    func performMove(player: Int, p: Position) -> Board {
+    func performMove(_ position: Position) -> Board {
         var values = values
-        values[p.x][p.y] = player
-        return Board(values: values)
+        values[position.x][position.y] = turn
+        return Board(values: values, turn: opponent)
     }
 }
 

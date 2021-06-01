@@ -29,7 +29,7 @@ class BoardTests: XCTestCase {
         XCTAssertEqual(sut.values, [[0, 0, 0],
                                     [0, 0, 0],
                                     [0, 0, 0]])
-        XCTAssertEqual(sut.status, Board.IN_PROGRESS)
+        XCTAssertEqual(sut.status, Status.IN_PROGRESS)
     }
     
     func test_InitializeBoardWithValues() {
@@ -53,7 +53,7 @@ class BoardTests: XCTestCase {
         let sut = Board(values: values)
         
         // When
-        let output = sut.performMove(player: 1, p: Position(x: 0, y: 0))
+        let output = sut.performMove(Board.Position(x: 0, y: 0))
         
         // Assert
         XCTAssertEqual(output.values, [[1, 1, 1],
@@ -70,7 +70,7 @@ class BoardTests: XCTestCase {
         
         // When
         // Assert
-        XCTAssertEqual(sut.status, Board.IN_PROGRESS)
+        XCTAssertEqual(sut.status, Status.IN_PROGRESS)
     }
     
     func test_Draw_IfNoPositionEmpty() {
@@ -82,7 +82,7 @@ class BoardTests: XCTestCase {
         
         // When
         // Assert
-        XCTAssertEqual(sut.status, Board.DRAW)
+        XCTAssertEqual(sut.status, Status.DRAW)
     }
     
     func test_Win_IfSamePlayerOnARow() {

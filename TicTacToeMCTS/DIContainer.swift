@@ -16,12 +16,13 @@ enum DIContainer {
         
         let board = Board(values: [[0, 0, 1],
                                    [2, 2, 1],
-                                   [0, 0, 2]])
-        nodeViewController.node = MonteCarloTreeSearch()._findNextMove(board: board, player: Board.P1)
+                                   [0, 0, 2]],
+                          turn: Board.P1)
+        nodeViewController.node = MTCSAi().traverseTree(state: board)
         return navController
     }
     
-    static func provideNodeViewController(_ node: Node) -> UIViewController {
+    static func provideNodeViewController(_ node: Node<Board>) -> UIViewController {
         let nodeViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NodeViewController") as! NodeViewController
         nodeViewController.node = node
         return nodeViewController
