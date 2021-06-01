@@ -10,34 +10,36 @@ import Foundation
 
 class MonteCarloTreeSearch {
     
-    static let DEFAULT_ITERATIONS = 100
+    static let DEFAULT_ITERATIONS = 80
     
     func findNextMove(board: Board, player: Int, iterations: Int = DEFAULT_ITERATIONS) -> Board {
+        let rootNode = _findNextMove(board: board, player: player)
+        let winnerNode = findBestNodeWithScore(rootNode)
+        return winnerNode.board
+    }
+    
+    func _findNextMove(board: Board, player: Int, iterations: Int = DEFAULT_ITERATIONS) -> Node {
         let rootNode = Node(board: board, player: player)
         let opponent = 3 - player
         
         for _ in 0..<iterations {
             // Phase 1 - Selection
-            let promisingNode = selectPromisingNode(rootNode)
+            var nodeToExplore = selectPromisingNode(rootNode)
             
             // Phase 2 - Expansion
-            if promisingNode.board.status == Board.IN_PROGRESS {
-                expandNode(promisingNode)
+            if nodeToExplore.board.status == Board.IN_PROGRESS {
+                expandNode(nodeToExplore)
+                nodeToExplore = nodeToExplore.children.randomElement()!
             }
             
             // Phase 3 - Simulation
-            var nodeToExplore = promisingNode
-            if promisingNode.children.count > 0 {
-                nodeToExplore = promisingNode.children.randomElement()!
-            }
             let playoutResult = simulateRandomPlayout(nodeToExplore, player: player, opponent: opponent)
             
             // Phase 4 - Update
             backPropogation(nodeToExplore, result: playoutResult);
         }
         
-        let winnerNode = findBestNodeWithScore(rootNode)
-        return winnerNode.board
+        return rootNode
     }
 }
 
@@ -58,22 +60,29 @@ private extension MonteCarloTreeSearch {
     }
     
     func simulateRandomPlayout(_ nodeToExplore: Node, player: Int, opponent: Int) -> Int {
+        
+        if nodeToExplore.board.status == opponent {
+            nodeToExplore.parent?.winCount = -1000
+            return 0
+        }
+        
         var node = nodeToExplore
         while node.board.status == Board.IN_PROGRESS {
             node = node.allPossibleStates().randomElement()!
         }
-        return node.board.status
+        
+        if node.board.status == player {
+            return 1
+        } else {
+            return 0
+        }
     }
     
     func backPropogation(_ nodeToExplore: Node, result: Int) {
         var node: Node? = nodeToExplore
         while node != nil {
             node?.visitCount += 1
-            
-            if result == node?.player {
-                node?.winCount += 1
-            }
-            
+            node?.winCount += result
             node = node?.parent
         }
     }
@@ -94,6 +103,6 @@ private extension Node {
             return Double(Int.max)
         }
         
-        return Double(winCount) / Double(visitCount) + 1.41 *  (log2(Double(parent!.visitCount)) / Double(visitCount)).squareRoot()
+        return Double(winCount) / Double(visitCount) + 1.41 *  sqrt(log2(Double(parent!.visitCount)) / Double(visitCount))
     }
 }

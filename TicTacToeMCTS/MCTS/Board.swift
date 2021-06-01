@@ -12,7 +12,7 @@ struct Position {
     let y: Int
 }
 
-struct Board {
+struct Board: Equatable {
     
     static let IN_PROGRESS = -1
     static let DRAW = 0
@@ -90,5 +90,18 @@ extension Array where Element == Int {
         } else {
             return nil
         }
+    }
+}
+
+
+extension Board {
+    
+    func toString() -> String {
+        let displayText: [String] = [".", "0", "X"]
+        
+        return values.map { row in
+            row.map { "\(displayText[$0])\t" }.joined()
+        }
+        .joined(separator: "\n")
     }
 }

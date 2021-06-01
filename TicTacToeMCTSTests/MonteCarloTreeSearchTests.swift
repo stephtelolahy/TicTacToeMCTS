@@ -32,15 +32,3 @@ class MonteCarloTreeSearchTests: XCTestCase {
     }
 
 }
-
-private extension Board {
-    
-    func toString() -> String {
-        let displayText: [String] = [".", "0", "X"]
-        
-        return values.map { row in
-            row.map { "\(displayText[$0])\t" }.joined()
-        }
-        .joined(separator: "\n")
-    }
-}

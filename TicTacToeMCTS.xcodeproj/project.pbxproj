@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33AEBF5D2663557000C86532 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF5C2663557000C86532 /* AppDelegate.swift */; };
-		33AEBF612663557000C86532 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF602663557000C86532 /* ViewController.swift */; };
+		33AEBF612663557000C86532 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF602663557000C86532 /* NodeViewController.swift */; };
 		33AEBF642663557000C86532 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AEBF622663557000C86532 /* Main.storyboard */; };
 		33AEBF662663557200C86532 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AEBF652663557200C86532 /* Assets.xcassets */; };
 		33AEBF692663557200C86532 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AEBF672663557200C86532 /* LaunchScreen.storyboard */; };
@@ -20,6 +20,7 @@
 		33AEBF8E2663DF6000C86532 /* MonteCarloTreeSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */; };
 		33AEBF8F2663DFC300C86532 /* MonteCarloTreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MonteCarloTreeSearch.swift */; };
 		33AEBF902663DFC500C86532 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF892663D02500C86532 /* Node.swift */; };
+		33E203922666C47F00C3DD45 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E203912666C47F00C3DD45 /* DIContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +36,7 @@
 /* Begin PBXFileReference section */
 		33AEBF592663557000C86532 /* TicTacToeMCTS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToeMCTS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AEBF5C2663557000C86532 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		33AEBF602663557000C86532 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		33AEBF602663557000C86532 /* NodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeViewController.swift; sourceTree = "<group>"; };
 		33AEBF632663557000C86532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33AEBF652663557200C86532 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33AEBF682663557200C86532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 		33AEBF892663D02500C86532 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		33AEBF8B2663D44B00C86532 /* MonteCarloTreeSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonteCarloTreeSearch.swift; sourceTree = "<group>"; };
 		33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonteCarloTreeSearchTests.swift; sourceTree = "<group>"; };
+		33E203912666C47F00C3DD45 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +92,8 @@
 			children = (
 				33AEBF70266356F900C86532 /* MCTS */,
 				33AEBF5C2663557000C86532 /* AppDelegate.swift */,
-				33AEBF602663557000C86532 /* ViewController.swift */,
+				33E203912666C47F00C3DD45 /* DIContainer.swift */,
+				33AEBF602663557000C86532 /* NodeViewController.swift */,
 				33AEBF622663557000C86532 /* Main.storyboard */,
 				33AEBF652663557200C86532 /* Assets.xcassets */,
 				33AEBF672663557200C86532 /* LaunchScreen.storyboard */,
@@ -219,9 +222,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				33AEBF8C2663D44B00C86532 /* MonteCarloTreeSearch.swift in Sources */,
-				33AEBF612663557000C86532 /* ViewController.swift in Sources */,
+				33AEBF612663557000C86532 /* NodeViewController.swift in Sources */,
 				33AEBF5D2663557000C86532 /* AppDelegate.swift in Sources */,
 				33AEBF8A2663D02500C86532 /* Node.swift in Sources */,
+				33E203922666C47F00C3DD45 /* DIContainer.swift in Sources */,
 				33AEBF742663582700C86532 /* Board.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
