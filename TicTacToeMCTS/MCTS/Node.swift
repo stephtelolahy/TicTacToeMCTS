@@ -11,7 +11,7 @@ class Node {
     let parent: Node?
     
     var visitCount: Int = 0
-    var totalScore: Int = 0
+    var winCount: Int = 0
     var children: [Node] = []
     
     

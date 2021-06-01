@@ -11,9 +11,6 @@ import Foundation
 class MonteCarloTreeSearch {
     
     static let DEFAULT_ITERATIONS = 100
-    static let WIN_SCORE = 20
-    static let DRAW_SCORE = 10
-    static let LOOSE_SCORE = 0
     
     func findNextMove(board: Board, player: Int, iterations: Int = DEFAULT_ITERATIONS) -> Board {
         let rootNode = Node(board: board, player: player)
@@ -65,20 +62,7 @@ private extension MonteCarloTreeSearch {
         while node.board.status == Board.IN_PROGRESS {
             node = node.allPossibleStates().randomElement()!
         }
-        
-        switch node.board.status {
-        case player:
-            return Self.WIN_SCORE
-            
-        case opponent:
-            return Self.LOOSE_SCORE
-            
-        case Board.DRAW:
-            return Self.DRAW_SCORE
-            
-        default:
-            fatalError("Illegal state")
-        }
+        return node.board.status
     }
     
     func backPropogation(_ nodeToExplore: Node, result: Int) {
@@ -86,11 +70,10 @@ private extension MonteCarloTreeSearch {
         while node != nil {
             node?.visitCount += 1
             
-            if node?.player == result {
-                
+            if result == node?.player {
+                node?.winCount += 1
             }
             
-            node?.totalScore += result
             node = node?.parent
         }
     }
@@ -100,7 +83,7 @@ private extension MonteCarloTreeSearch {
     }
     
     func findBestNodeWithScore(_ node: Node) -> Node {
-        node.children.max { $0.averageScore < $1.averageScore }!
+        node.children.max { $0.visitCount < $1.visitCount }!
     }
 }
 
@@ -111,10 +94,6 @@ private extension Node {
             return Double(Int.max)
         }
         
-        return Double(totalScore) / Double(visitCount) + 1.41 *  (log2(Double(parent!.visitCount)) / Double(visitCount)).squareRoot()
-    }
-    
-    var averageScore: Double {
-        Double(totalScore) / Double(visitCount)
+        return Double(winCount) / Double(visitCount) + 1.41 *  (log2(Double(parent!.visitCount)) / Double(visitCount)).squareRoot()
     }
 }
