@@ -8,17 +8,17 @@
 import UIKit
 import Foundation
 
-class MTCSAi {
+class MTCS {
     
-    static let DEFAULT_ITERATIONS = 100
+    private static let DEFAULT_ITERATIONS = 1000
     
     func findBestMove<T: State>(state: T, iterations: Int = DEFAULT_ITERATIONS) -> T {
-        let rootNode = traverseTree(state: state, iterations: iterations)
-        let bestNode = findBestNodeWithScore(rootNode)
+        let rootNode = explore(state: state, iterations: iterations)
+        let bestNode = rootNode.children.max { $0.visitCount < $1.visitCount }!
         return bestNode.state
     }
     
-    func traverseTree<T: State>(state: T, iterations: Int = DEFAULT_ITERATIONS) -> Node<T> {
+    func explore<T: State>(state: T, iterations: Int = DEFAULT_ITERATIONS) -> Node<T> {
         let rootNode = Node(state: state)
         let player = state.turn
         let opponent = state.opponent
@@ -37,26 +37,27 @@ class MTCSAi {
             let playoutResult = simulateRandomPlayout(nodeToExplore, player: player, opponent: opponent)
             
             // Phase 4 - Update
-            backPropogation(nodeToExplore, result: playoutResult);
+            backPropogation(nodeToExplore, result: playoutResult)
         }
         
         return rootNode
     }
 }
 
-private extension MTCSAi {
+private extension MTCS {
     
     func selectPromisingNode<T: State>(_ rootNode: Node<T>) -> Node<T> {
         var node = rootNode
-        while node.children.count > 0 {
-            node = findBestNodeWithUCT(node)
+        while !node.children.isEmpty {
+            node = node.children.max { $0.uctValue < $1.uctValue }!
         }
         return node
     }
     
     func expandNode<T: State>(_ node: Node<T>) {
-        let children = node.state.allPossibleMoves.map { Node(state: $0, parent: node) }
-        node.children.append(contentsOf: children)
+        node.state.possibleMoves.forEach {
+            node.children.append(Node(state: $0, parent: node))
+        }
     }
     
     func simulateRandomPlayout<T: State>(_ nodeToExplore: Node<T>, player: Int, opponent: Int) -> Int {
@@ -65,13 +66,13 @@ private extension MTCSAi {
              https://medium.com/swlh/tic-tac-toe-at-the-monte-carlo-a5e0394c7bc2
              If the node results in an opponent’s victory, it would mean that if the player had made the selected move, his opponent will have a subsequent move that can result in the opponents immediete victory. Because the move the player chose can lead to a definite loss, the function lowers the parents node’s winScore to the lowest possible integer to prevent future moves to that node. Otherwise the algorithm alternates random moves between the two player until the board results in a game ending state. The function then returns the final game status.
              */
-            nodeToExplore.parent?.winCount = -1000
+            nodeToExplore.parent?.winCount = Int.min
             return 0
         }
         
         var node = nodeToExplore
         while node.state.status == Status.IN_PROGRESS {
-            let randomMove = node.state.allPossibleMoves.randomElement()!
+            let randomMove = node.state.possibleMoves.randomElement()!
             node = Node(state: randomMove)
         }
         
@@ -90,13 +91,18 @@ private extension MTCSAi {
             node = node?.parent
         }
     }
+}
+
+class Node<T: State> {
+    let state: T
+    let parent: Node?
+    var children: [Node] = []
+    var visitCount: Int = 0
+    var winCount: Int = 0
     
-    func findBestNodeWithUCT<T: State>(_ node: Node<T>) -> Node<T> {
-        node.children.max { $0.uctValue < $1.uctValue }!
-    }
-    
-    func findBestNodeWithScore<T: State>(_ node: Node<T>) -> Node<T> {
-        node.children.max { $0.visitCount < $1.visitCount }!
+    init(state: T, parent: Node? = nil) {
+        self.state = state
+        self.parent = parent
     }
 }
 

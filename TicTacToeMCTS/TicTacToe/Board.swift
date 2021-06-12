@@ -20,36 +20,28 @@ struct Board: State, Equatable {
     let values: [[Int]]
     let turn: Int
     
-    init(values: [[Int]] =  [[0, 0, 0],
-                             [0, 0, 0],
-                             [0, 0, 0]],
-         turn: Int = Board.P1) {
-        self.values = values
-        self.turn = turn
-    }
-    
     var opponent: Int {
         3 - turn
     }
     
     var status: Int {
-        var rows: [[Int]] = []
+        var lines: [[Int]] = []
         // rows
-        rows.append([values[0][0], values[0][1], values[0][2]])
-        rows.append([values[1][0], values[1][1], values[1][2]])
-        rows.append([values[2][0], values[2][1], values[2][2]])
+        lines.append([values[0][0], values[0][1], values[0][2]])
+        lines.append([values[1][0], values[1][1], values[1][2]])
+        lines.append([values[2][0], values[2][1], values[2][2]])
         
         // columns
-        rows.append([values[0][0], values[1][0], values[2][0]])
-        rows.append([values[0][1], values[1][1], values[2][1]])
-        rows.append([values[0][2], values[1][2], values[2][2]])
+        lines.append([values[0][0], values[1][0], values[2][0]])
+        lines.append([values[0][1], values[1][1], values[2][1]])
+        lines.append([values[0][2], values[1][2], values[2][2]])
         
         // diagonals
-        rows.append([values[0][0], values[1][1], values[2][2]])
-        rows.append([values[0][2], values[1][1], values[2][0]])
+        lines.append([values[0][0], values[1][1], values[2][2]])
+        lines.append([values[0][2], values[1][1], values[2][0]])
         
-        for row in rows {
-            if let win = row.winValue() {
+        for line in lines {
+            if let win = line.commonValue() {
                 return win
             }
         }
@@ -61,7 +53,7 @@ struct Board: State, Equatable {
         }
     }
     
-    var allPossibleMoves: [Board] {
+    var possibleMoves: [Board] {
         emptyPositions.map {
             performMove($0)
         }
@@ -89,7 +81,7 @@ struct Board: State, Equatable {
 
 extension Array where Element == Int {
     
-    func winValue() -> Element? {
+    func commonValue() -> Element? {
         let firstValue = self[0]
         if firstValue != 0,
            self.allSatisfy({ $0 == firstValue }) {

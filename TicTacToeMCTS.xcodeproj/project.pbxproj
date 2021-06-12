@@ -15,11 +15,9 @@
 		33AEBF692663557200C86532 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AEBF672663557200C86532 /* LaunchScreen.storyboard */; };
 		33AEBF742663582700C86532 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF732663582700C86532 /* Board.swift */; };
 		33AEBF842663C3D300C86532 /* BoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF832663C3D300C86532 /* BoardTests.swift */; };
-		33AEBF8A2663D02500C86532 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF892663D02500C86532 /* Node.swift */; };
-		33AEBF8C2663D44B00C86532 /* MTCSAi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MTCSAi.swift */; };
+		33AEBF8C2663D44B00C86532 /* MTCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MTCS.swift */; };
 		33AEBF8E2663DF6000C86532 /* MonteCarloTreeSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */; };
-		33AEBF8F2663DFC300C86532 /* MTCSAi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MTCSAi.swift */; };
-		33AEBF902663DFC500C86532 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF892663D02500C86532 /* Node.swift */; };
+		33AEBF8F2663DFC300C86532 /* MTCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MTCS.swift */; };
 		33D390D92666E35A00DAC5BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D390D82666E35A00DAC5BE /* State.swift */; };
 		33D390DA2666E37F00DAC5BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D390D82666E35A00DAC5BE /* State.swift */; };
 		33E203922666C47F00C3DD45 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E203912666C47F00C3DD45 /* DIContainer.swift */; };
@@ -47,8 +45,7 @@
 		33AEBF792663C3B300C86532 /* TicTacToeMCTSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeMCTSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AEBF7D2663C3B300C86532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33AEBF832663C3D300C86532 /* BoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTests.swift; sourceTree = "<group>"; };
-		33AEBF892663D02500C86532 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		33AEBF8B2663D44B00C86532 /* MTCSAi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTCSAi.swift; sourceTree = "<group>"; };
+		33AEBF8B2663D44B00C86532 /* MTCS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTCS.swift; sourceTree = "<group>"; };
 		33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonteCarloTreeSearchTests.swift; sourceTree = "<group>"; };
 		33D390D82666E35A00DAC5BE /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		33E203912666C47F00C3DD45 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
@@ -72,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		264B69E82674867C009A8C2F /* TicTacToe */ = {
+			isa = PBXGroup;
+			children = (
+				33AEBF732663582700C86532 /* Board.swift */,
+			);
+			path = TicTacToe;
+			sourceTree = "<group>";
+		};
 		33AEBF502663557000C86532 = {
 			isa = PBXGroup;
 			children = (
@@ -94,10 +99,10 @@
 			isa = PBXGroup;
 			children = (
 				33AEBF70266356F900C86532 /* MCTS */,
+				264B69E82674867C009A8C2F /* TicTacToe */,
 				33AEBF5C2663557000C86532 /* AppDelegate.swift */,
-				33E203912666C47F00C3DD45 /* DIContainer.swift */,
-				33AEBF732663582700C86532 /* Board.swift */,
 				33AEBF602663557000C86532 /* NodeViewController.swift */,
+				33E203912666C47F00C3DD45 /* DIContainer.swift */,
 				33AEBF622663557000C86532 /* Main.storyboard */,
 				33AEBF652663557200C86532 /* Assets.xcassets */,
 				33AEBF672663557200C86532 /* LaunchScreen.storyboard */,
@@ -110,8 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				33D390D82666E35A00DAC5BE /* State.swift */,
-				33AEBF892663D02500C86532 /* Node.swift */,
-				33AEBF8B2663D44B00C86532 /* MTCSAi.swift */,
+				33AEBF8B2663D44B00C86532 /* MTCS.swift */,
 			);
 			path = MCTS;
 			sourceTree = "<group>";
@@ -225,10 +229,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33AEBF8C2663D44B00C86532 /* MTCSAi.swift in Sources */,
+				33AEBF8C2663D44B00C86532 /* MTCS.swift in Sources */,
 				33AEBF612663557000C86532 /* NodeViewController.swift in Sources */,
 				33AEBF5D2663557000C86532 /* AppDelegate.swift in Sources */,
-				33AEBF8A2663D02500C86532 /* Node.swift in Sources */,
 				33E203922666C47F00C3DD45 /* DIContainer.swift in Sources */,
 				33D390D92666E35A00DAC5BE /* State.swift in Sources */,
 				33AEBF742663582700C86532 /* Board.swift in Sources */,
@@ -239,10 +242,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33AEBF8F2663DFC300C86532 /* MTCSAi.swift in Sources */,
+				33AEBF8F2663DFC300C86532 /* MTCS.swift in Sources */,
 				33AEBF842663C3D300C86532 /* BoardTests.swift in Sources */,
 				331D54752666ED5A008254A9 /* Board.swift in Sources */,
-				33AEBF902663DFC500C86532 /* Node.swift in Sources */,
 				33AEBF8E2663DF6000C86532 /* MonteCarloTreeSearchTests.swift in Sources */,
 				33D390DA2666E37F00DAC5BE /* State.swift in Sources */,
 			);

@@ -9,21 +9,13 @@ import XCTest
 
 class BoardTests: XCTestCase {
     
-    func test_InitializeEmptyBoard() {
-        // Given
-        // When
-        let sut = Board()
-        
-        // Assert
-        XCTAssertEqual(sut.values, [[0, 0, 0],
-                                    [0, 0, 0],
-                                    [0, 0, 0]])
-    }
-    
     func test_InitialBoardIsInProgress() {
         // Given
+        let values = [[0, 0, 0],
+                      [0, 0, 0],
+                      [0, 0, 0]]
         // When
-        let sut = Board()
+        let sut = Board(values: values, turn: Board.P1)
         
         // Assert
         XCTAssertEqual(sut.values, [[0, 0, 0],
@@ -39,7 +31,7 @@ class BoardTests: XCTestCase {
                       [2, 2, 1]]
         
         // When
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // Assert
         XCTAssertEqual(sut.values, values)
@@ -50,7 +42,7 @@ class BoardTests: XCTestCase {
         let values = [[0, 1, 1],
                       [0, 0, 1],
                       [2, 2, 1]]
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // When
         let output = sut.performMove(Board.Position(x: 0, y: 0))
@@ -66,7 +58,7 @@ class BoardTests: XCTestCase {
         let values = [[0, 1, 1],
                       [0, 0, 1],
                       [2, 0, 2]]
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // When
         // Assert
@@ -78,7 +70,7 @@ class BoardTests: XCTestCase {
         let values = [[2, 2, 1],
                       [1, 1, 2],
                       [2, 1, 2]]
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // When
         // Assert
@@ -90,7 +82,7 @@ class BoardTests: XCTestCase {
         let values = [[0, 1, 1],
                       [0, 0, 1],
                       [2, 2, 2]]
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // When
         // Assert
@@ -102,7 +94,7 @@ class BoardTests: XCTestCase {
         let values = [[0, 0, 1],
                       [0, 2, 1],
                       [2, 0, 1]]
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // When
         // Assert
@@ -114,7 +106,7 @@ class BoardTests: XCTestCase {
         let values = [[1, 0, 2],
                       [0, 1, 2],
                       [2, 0, 1]]
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // When
         // Assert
@@ -126,7 +118,7 @@ class BoardTests: XCTestCase {
         let values = [[0, 0, 2],
                       [0, 2, 1],
                       [2, 0, 1]]
-        let sut = Board(values: values)
+        let sut = Board(values: values, turn: Board.P1)
         
         // When
         // Assert

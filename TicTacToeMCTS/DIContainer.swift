@@ -14,11 +14,11 @@ enum DIContainer {
         let navController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let nodeViewController = navController.viewControllers[0] as! NodeViewController
         
-        let board = Board(values: [[0, 0, 1],
-                                   [2, 2, 1],
-                                   [0, 0, 2]],
+        let board = Board(values: [[0, 0, 0],
+                                   [0, 2, 0],
+                                   [0, 0, 0]],
                           turn: Board.P1)
-        nodeViewController.node = MTCSAi().traverseTree(state: board)
+        nodeViewController.node = MTCS().explore(state: board)
         return navController
     }
     
