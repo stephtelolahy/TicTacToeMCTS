@@ -8,9 +8,9 @@
 import XCTest
 
 class MonteCarloTreeSearchTests: XCTestCase {
-    
+
     private var sut: MTCS!
-    
+
     override func setUp() {
         sut = MTCS()
     }
@@ -20,9 +20,10 @@ class MonteCarloTreeSearchTests: XCTestCase {
                                    [0, 0, 0],
                                    [0, 0, 0]],
                           turn: Board.P1)
-        while board.status == Status.IN_PROGRESS {
-            board = sut.findBestMove(state: board)
+        while board.status == Status.inProgress {
+            let bestMove = sut.findBestMove(state: board)
+            board = board.performMove(bestMove)
         }
-        XCTAssertEqual(board.status, Status.DRAW)
+        XCTAssertEqual(board.status, Status.draw)
     }
 }

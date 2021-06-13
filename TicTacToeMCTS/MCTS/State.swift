@@ -7,13 +7,17 @@
 
 // Defining two player turn based game state
 protocol State {
+    associatedtype Move
+
     var turn: Int { get }
     var opponent: Int { get }
     var status: Int { get } // If status is equal to player then the he wins
-    var possibleMoves: [Self] { get }
+    var possibleMoves: [Move] { get }
+
+    func performMove(_ move: Move) -> Self
 }
 
 enum Status {
-    static let IN_PROGRESS = -1
-    static let DRAW = 0
+    static let inProgress = -1
+    static let draw = 0
 }
