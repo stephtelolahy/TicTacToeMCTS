@@ -23,7 +23,7 @@ enum DIContainer {
         return navController
     }
 
-    static func provideNodeViewController(_ node: Node<Board>) -> UIViewController {
+    static func provideNodeViewController(_ node: MTCS.Node<Board>) -> UIViewController {
         let nodeViewController = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "NodeViewController") as! NodeViewController
         nodeViewController.node = node

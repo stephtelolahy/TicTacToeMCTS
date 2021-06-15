@@ -10,9 +10,9 @@ import UIKit
 
 class NodeViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
 
-    var node: Node<Board>!
+    var node: MTCS.Node<Board>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,10 +50,10 @@ extension NodeViewController: UITableViewDelegate {
 
 class NodeCell: UITableViewCell {
 
-    @IBOutlet weak var boardLabel: UILabel!
-    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet private weak var boardLabel: UILabel!
+    @IBOutlet private weak var infoLabel: UILabel!
 
-    func update(_ node: Node<Board>, isBest: Bool) {
+    func update(_ node: MTCS.Node<Board>, isBest: Bool) {
         boardLabel.text = node.state.toString()
         infoLabel.text = "\(node.winCount)/\(node.visitCount)"
         if node.state.status == Status.inProgress {

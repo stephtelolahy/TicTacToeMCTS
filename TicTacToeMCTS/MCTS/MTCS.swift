@@ -5,47 +5,62 @@
 //  Created by Hugues Stéphano TELOLAHY on 30/05/2021.
 //
 
-import UIKit
 import Foundation
 
+// Defining n player turn based game state
+protocol State {
+    associatedtype Move
+    
+    var turn: Int { get }
+    var status: Int { get }
+    var possibleMoves: [Move] { get }
+    
+    func performMove(_ move: Move) -> Self
+}
+
+enum Status {
+    static let inProgress = -1
+    static let draw = 0
+    // If status is equal to player then the he wins, otherwise he looses
+}
+
 class MTCS {
-
+    
     private static let defaultIterations = 1000
-
+    
     func findBestMove<T: State>(state: T, iterations: Int = defaultIterations) -> T.Move {
         let rootNode = explore(state: state, iterations: iterations)
         let bestNode = rootNode.children.max { $0.visitCount < $1.visitCount }!
         return bestNode.move!
     }
-
+    
     func explore<T: State>(state: T, iterations: Int = defaultIterations) -> Node<T> {
         let rootNode = Node(state: state)
         let player = state.turn
-        let opponent = state.opponent
-
+        
         for _ in 0..<iterations {
             // Phase 1 - Selection
             var nodeToExplore = selectPromisingNode(rootNode)
-
+            
             // Phase 2 - Expansion
             if nodeToExplore.state.status == Status.inProgress {
                 expandNode(nodeToExplore)
                 nodeToExplore = nodeToExplore.children.randomElement()!
             }
-
+            
             // Phase 3 - Simulation
-            let playoutResult = simulateRandomPlayout(nodeToExplore, player: player, opponent: opponent)
-
+            let playoutResult = simulateRandomPlayout(nodeToExplore, player: player)
+            
             // Phase 4 - Update
             backPropogation(nodeToExplore, result: playoutResult)
         }
-
+        
         return rootNode
     }
 }
 
 private extension MTCS {
-
+    
     func selectPromisingNode<T: State>(_ rootNode: Node<T>) -> Node<T> {
         var node = rootNode
         while !node.children.isEmpty {
@@ -53,7 +68,7 @@ private extension MTCS {
         }
         return node
     }
-
+    
     func expandNode<T: State>(_ node: Node<T>) {
         node.state.possibleMoves.forEach { move in
             let childState = node.state.performMove(move)
@@ -61,9 +76,14 @@ private extension MTCS {
             node.children.append(childNode)
         }
     }
-
-    func simulateRandomPlayout<T: State>(_ nodeToExplore: Node<T>, player: Int, opponent: Int) -> Int {
-        if nodeToExplore.state.status == opponent {
+    
+    func simulateRandomPlayout<T: State>(_ nodeToExplore: Node<T>, player: Int) -> Int {
+        
+        var status = nodeToExplore.state.status
+        // Opponent wins
+        if status != Status.inProgress,
+           status != Status.draw,
+           status != player {
             /*
              https://medium.com/swlh/tic-tac-toe-at-the-monte-carlo-a5e0394c7bc2
              If the node results in an opponent’s victory,
@@ -80,21 +100,22 @@ private extension MTCS {
             nodeToExplore.parent?.winCount = Int.min
             return 0
         }
-
+        
         var node = nodeToExplore
-        while node.state.status == Status.inProgress {
+        while status == Status.inProgress {
             let randomMove = node.state.possibleMoves.randomElement()!
             let childState = node.state.performMove(randomMove)
+            status = childState.status
             node = Node(state: childState)
         }
-
-        if node.state.status == player {
+        
+        if status == player {
             return 1
         } else {
             return 0
         }
     }
-
+    
     func backPropogation<T: State>(_ nodeToExplore: Node<T>, result: Int) {
         var node: Node<T>? = nodeToExplore
         while node != nil {
@@ -105,29 +126,31 @@ private extension MTCS {
     }
 }
 
-class Node<T: State> {
-    let state: T
-    let parent: Node?
-    let move: T.Move?
-    var children: [Node] = []
-    var visitCount: Int = 0
-    var winCount: Int = 0
-
-    init(state: T, parent: Node? = nil, move: T.Move? = nil) {
-        self.state = state
-        self.parent = parent
-        self.move = move
+extension MTCS {
+    class Node<T: State> {
+        let state: T
+        let parent: Node?
+        let move: T.Move?
+        var children: [Node] = []
+        var visitCount: Int = 0
+        var winCount: Int = 0
+        
+        init(state: T, parent: Node? = nil, move: T.Move? = nil) {
+            self.state = state
+            self.parent = parent
+            self.move = move
+        }
     }
 }
 
-private extension Node {
-
+private extension MTCS.Node {
+    
     var uctValue: Double {
         if visitCount == 0 {
             return Double(Int.max)
         }
-
+        
         return Double(winCount) / Double(visitCount)
-            + 1.41 *  sqrt(log2(Double(parent!.visitCount)) / Double(visitCount))
+            + 1.41 * sqrt(log2(Double(parent!.visitCount)) / Double(visitCount))
     }
 }

@@ -21,10 +21,6 @@ struct Board: State, Equatable {
     let values: [[Int]]
     let turn: Int
 
-    var opponent: Int {
-        3 - turn
-    }
-
     var status: Int {
         var lines: [[Int]] = []
         // rows
@@ -68,7 +64,7 @@ struct Board: State, Equatable {
     func performMove(_ position: Position) -> Board {
         var values = values
         values[position.x][position.y] = turn
-        return Board(values: values, turn: opponent)
+        return Board(values: values, turn: 3 - turn)
     }
 }
 

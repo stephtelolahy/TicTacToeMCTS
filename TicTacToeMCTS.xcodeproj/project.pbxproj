@@ -19,8 +19,6 @@
 		33AEBF8C2663D44B00C86532 /* MTCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MTCS.swift */; };
 		33AEBF8E2663DF6000C86532 /* MonteCarloTreeSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */; };
 		33AEBF8F2663DFC300C86532 /* MTCS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AEBF8B2663D44B00C86532 /* MTCS.swift */; };
-		33D390D92666E35A00DAC5BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D390D82666E35A00DAC5BE /* State.swift */; };
-		33D390DA2666E37F00DAC5BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D390D82666E35A00DAC5BE /* State.swift */; };
 		33E203922666C47F00C3DD45 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E203912666C47F00C3DD45 /* DIContainer.swift */; };
 		773845E5C5DD3FF66D908E60 /* Pods_TicTacToeMCTS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211F4585A8106280260AF1DB /* Pods_TicTacToeMCTS.framework */; };
 /* End PBXBuildFile section */
@@ -50,7 +48,6 @@
 		33AEBF832663C3D300C86532 /* BoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTests.swift; sourceTree = "<group>"; };
 		33AEBF8B2663D44B00C86532 /* MTCS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTCS.swift; sourceTree = "<group>"; };
 		33AEBF8D2663DF6000C86532 /* MonteCarloTreeSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonteCarloTreeSearchTests.swift; sourceTree = "<group>"; };
-		33D390D82666E35A00DAC5BE /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		33E203912666C47F00C3DD45 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		651FF5AF2E9CB71040D397EB /* Pods-TicTacToeMCTSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeMCTSTests.release.xcconfig"; path = "Target Support Files/Pods-TicTacToeMCTSTests/Pods-TicTacToeMCTSTests.release.xcconfig"; sourceTree = "<group>"; };
 		95071EB1473FFDCFD61AA18F /* Pods-TicTacToeMCTS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeMCTS.release.xcconfig"; path = "Target Support Files/Pods-TicTacToeMCTS/Pods-TicTacToeMCTS.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,7 +132,6 @@
 		33AEBF70266356F900C86532 /* MCTS */ = {
 			isa = PBXGroup;
 			children = (
-				33D390D82666E35A00DAC5BE /* State.swift */,
 				33AEBF8B2663D44B00C86532 /* MTCS.swift */,
 			);
 			path = MCTS;
@@ -333,7 +329,6 @@
 				33AEBF612663557000C86532 /* NodeViewController.swift in Sources */,
 				33AEBF5D2663557000C86532 /* AppDelegate.swift in Sources */,
 				33E203922666C47F00C3DD45 /* DIContainer.swift in Sources */,
-				33D390D92666E35A00DAC5BE /* State.swift in Sources */,
 				33AEBF742663582700C86532 /* Board.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,7 +341,6 @@
 				33AEBF842663C3D300C86532 /* BoardTests.swift in Sources */,
 				331D54752666ED5A008254A9 /* Board.swift in Sources */,
 				33AEBF8E2663DF6000C86532 /* MonteCarloTreeSearchTests.swift in Sources */,
-				33D390DA2666E37F00DAC5BE /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
